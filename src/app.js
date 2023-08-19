@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import CartsRouter from "./routes/carts.routes.js";
@@ -72,8 +73,8 @@ app.use("/signup", SignUpRouter);
 app.use("/api/carts", CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", ProductsRouter);
-app.use("/api/realtimeproducts", RealTimeProducts);
 
+// Server
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
