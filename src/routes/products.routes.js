@@ -73,55 +73,6 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
-//Metodo asyncrono para guardar un producto
-router.post("/", async (req, res) => {
-  let codeExist;
-  try {
-    let products = await productsManager.getAll();
-    codeExist = products.find((product) => product.code === code);
-  } catch (err) {
-    console.log(err);
-  }
-
-  const {
-    title,
-    description,
-    code,
-    price,
-    status,
-    stock,
-    category,
-    thumbnails,
-  } = req.body;
-
-  if (!title || !description || !price || !code || !stock) {
-    res.status(400).json({ message: "Faltan datos" });
-  }
-
-  if (codeExist) {
-    res.status(400).json({ message: "El código ya existe" });
-  } else {
-    let product = {
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      category,
-      thumbnails: !thumbnails ? "" : thumbnails,
-    };
-    try {
-      await productsManager.saveProducts(product);
-      res.json({ message: "Producto creado con éxito", data: product });
-    } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Error al crear el producto", data: err });
-    }
-  }
-});
-
 // Método asyncrono para actualizar un producto
 router.put("/:pid", async (req, res) => {
   const { pid } = req.params;
