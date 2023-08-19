@@ -26,16 +26,20 @@ const checkUser = async () => {
       "Content-Type": "application/json",
     },
   });
-  if (!response.ok) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Algo salió mal! Vuelve a intentarlo",
-      showConfirmButton: true,
-      confirmButtonText: "Aceptar",
-    });
-  } else {
-    window.location.href = "/api/products";
+  try {
+    if (!response.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal! Vuelve a intentarlo",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar",
+      });
+    } else {
+      window.location.href = "/api/products";
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
