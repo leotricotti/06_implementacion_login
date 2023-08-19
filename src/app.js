@@ -11,6 +11,7 @@ import LoginRouter from "./routes/login.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import SessionRouter from "./routes/session.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
+import AddProductRouter from "./routes/addproduct.routes.js";
 
 dotenv.config();
 
@@ -71,6 +72,7 @@ app.use("/signup", SignUpRouter);
 app.use("/api/carts", CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", ProductsRouter);
+app.use("/api/addproduct", AddProductRouter);
 
 // Server
 const server = app.listen(PORT, () => {
