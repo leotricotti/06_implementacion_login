@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import CartsRouter from "./routes/carts.routes.js";
@@ -12,7 +11,6 @@ import LoginRouter from "./routes/login.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import SessionRouter from "./routes/session.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
-import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 
 dotenv.config();
 
