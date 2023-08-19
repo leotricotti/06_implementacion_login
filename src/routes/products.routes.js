@@ -4,8 +4,19 @@ import Product from "../dao/dbmanager/products.manager.js";
 const router = Router();
 const productsManager = new Product();
 
+//Middleware para hacer privadas las rutas
+const auth = (req, res, next) => {
+  if (req.session && req.session.user) {
+    return next();
+  } else {
+    return res.status(401).json({
+      respuesta: "No estás autorizado",
+    });
+  }
+};
+
 // Método asyncrono para obtener todos los productos
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const { limit, page, sort, category } = req.query;
   let initialPage = page ? page : 1;
   try {
