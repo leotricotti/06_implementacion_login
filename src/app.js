@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
+import { Server } from "socket.io";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -11,9 +12,11 @@ import LoginRouter from "./routes/login.routes.js";
 import SignUpRouter from "./routes/signup.routes.js";
 import SessionRouter from "./routes/session.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
-import AddProductRouter from "./routes/addproduct.routes.js";
+import Products from "./dao/dbmanager/products.manager.js";
+import RealTimeProducts from "./routes/realTimeProducts.routes.js";
 
 dotenv.config();
+const productsManager = new Products();
 
 //Variables
 const app = express();
@@ -54,7 +57,7 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+// Conexión respuesta de la base de datos
 const enviroment = async () => {
   try {
     await mongoose.connect(MONGO_URI);
@@ -72,9 +75,28 @@ app.use("/signup", SignUpRouter);
 app.use("/api/carts", CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", ProductsRouter);
-app.use("/api/addproduct", AddProductRouter);
+app.use("/api/realtimeproducts", RealTimeProducts);
 
 // Server
-const server = app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// Socket
+const io = new Server(httpServer);
+
+// Código para el manejo de conexiones de socket
+io.on("connection", async (socket) => {
+  // Mensaje de bienvenida al cliente que se conectó
+  console.log("Un cliente se ha conectado");
+
+  // Obtener datos de la base de datos
+  try {
+    const products = await productsManager.getAll();
+    const orderedProducts = products.reverse();
+    io.emit("products", orderedProducts);
+  } catch (error) {
+    // Manejar el error
+    console.log(error);
+  }
 });
