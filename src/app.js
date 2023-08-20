@@ -90,13 +90,23 @@ io.on("connection", async (socket) => {
   // Mensaje de bienvenida al cliente que se conectó
   console.log("Un cliente se ha conectado");
 
-  // Obtener datos de la base de datos
-  try {
-    const products = await productsManager.getAll();
-    const orderedProducts = products.reverse();
-    io.emit("products", orderedProducts);
-  } catch (error) {
-    // Manejar el error
-    console.log(error);
-  }
+  // Obtener los productos y emitirlos al cliente
+  socket.on("products", async () => {
+    try {
+      const products = await productsManager.getAll();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // Obtener los productos y emitirlos al cliente
+  socket.on("newProduct", async (newProduct) => {
+    try {
+      const result = await productsManager.saveProducts(newProduct);
+      const paginatedProducts = await productsManager.paginatedProducts(2);
+      io.emit("products", paginatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 });
