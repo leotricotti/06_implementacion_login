@@ -13,25 +13,27 @@ router.get("/", async (req, res) => {
   let initialPage = page ? page : 1;
   try {
     const user = await usersManager.getOne(req.session.user);
-    console.log(user);
     const response = await productsManager.getAll();
     if (limit) {
       let tempArray = response.slice(0, limit);
       res.render("products", {
         products: tempArray,
         styles: "products.styles.css",
+        user: user[0].first_name,
       });
     } else if (category) {
       let filteredProducts = await productsManager.filteredProducts(category);
       res.render("products", {
         products: filteredProducts.docs,
         styles: "products.styles.css",
+        user: user[0].first_name,
       });
     } else if (sort) {
       let orderedProducts = await productsManager.orderedProducts(sort);
       res.render("products", {
         products: orderedProducts,
         styles: "products.styles.css",
+        user: user[0].first_name,
       });
     } else {
       let paginatedProducts = await productsManager.paginatedProducts(
@@ -40,6 +42,7 @@ router.get("/", async (req, res) => {
       res.render("products", {
         products: paginatedProducts.docs,
         styles: "products.styles.css",
+        user: user[0].first_name,
       });
     }
   } catch (err) {
