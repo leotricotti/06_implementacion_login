@@ -1,7 +1,9 @@
+// Dirije a la página de login
 const moveToLogin = () => {
   window.location.href = "/";
 };
 
+// Función para crear un usuario
 async function postSignup(first_name, last_name, age, username, password) {
   const data = {
     first_name,
@@ -23,8 +25,10 @@ async function postSignup(first_name, last_name, age, username, password) {
   return result;
 }
 
+// Escucha el evento submit del formulario de registro
 const signupForm = document.getElementById("signup-form");
 
+// Captura los datos del formulario de registro
 signupForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const username = document.getElementById("username").value;
@@ -33,6 +37,7 @@ signupForm.addEventListener("submit", function (event) {
   const last_name = document.getElementById("last_name").value;
   const age = document.getElementById("age").value;
 
+  // Envía los datos del formulario de registro y crea un usuario
   postSignup(first_name, last_name, age, username, password).then((datos) => {
     if (datos) {
       Swal.fire({
