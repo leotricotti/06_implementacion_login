@@ -40,3 +40,7 @@ p {
 .dropdown-menu {
   position: absolute !important;
 }
+
+.nav-products > h3 {
+  margin-right: 32px !important;
+}

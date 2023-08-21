@@ -18,6 +18,23 @@ async function postLogin(username, password) {
   return result;
 }
 
+//Función que al agregar un producto al carrito y el producto ya existe en el carrito, aumenta la cantidad del producto en 1
+const createCart = async () => {
+  const response = await fetch("/api/carts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      products: [],
+    }),
+  });
+  const cart = await response.json();
+  if (cart) {
+    showResult("Carrito creado con éxito");
+  }
+};
+
 //Comprobar si el usuario está logueado
 const checkUser = async () => {
   const response = await fetch("/api/session/check", {
@@ -37,6 +54,7 @@ const checkUser = async () => {
       });
     } else {
       window.location.href = "/api/products?page=1";
+      createCart();
     }
   } catch (error) {
     console.error(error);
