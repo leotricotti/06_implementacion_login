@@ -59,7 +59,10 @@ router.get("/:pid", async (req, res) => {
   try {
     const product = await productsManager.getOne(pid);
     if (product) {
-      res.json({ message: "success", products: product });
+      res.render("products", {
+        products: tempArray,
+        styles: "products.styles.css",
+      });
     } else {
       res.status(404).json({
         message: "Producto no encontrado",

@@ -1,16 +1,15 @@
 import { Router } from "express";
-import UserModel from "../dao/models/users.model.js";
+import User from "../dao/dbmanager/users.manager.js";
 
+//Inicializa variables
 const router = Router();
+const usersManager = new User();
 
 //Ruta que realiza el login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  const result = await UserModel.find({
-    email: username,
-    password,
-  });
+  const result = await usersManager.login(username, password);
 
   if (result.length === 0)
     return res.status(401).json({
@@ -29,7 +28,7 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
   const { first_name, last_name, age, email, password } = req.body;
 
-  const result = await UserModel.create({
+  const result = await usersManager.signup({
     first_name,
     last_name,
     age,

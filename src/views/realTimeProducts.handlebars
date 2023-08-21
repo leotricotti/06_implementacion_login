@@ -125,7 +125,7 @@
       <li class="page-item">
         <button
           class="page-link"
-          onclick="previousPage()"
+          onclick="previousPage('products?page')"
           type="button"
           id="previous-page"
         >Anterior</button>
@@ -134,30 +134,30 @@
         class="page-item"
         id="item-page"
         data-page="1"
-        onclick="pagination(1)"
+        onclick="pagination(1, 'products?page')"
       ><button class="page-link">1</button></li>
       <li
         class="page-item"
         id="item-page"
         data-page="2"
-        onclick="pagination(2)"
+        onclick="pagination(2, 'products?page')"
       ><button class="page-link">2</button></li>
       <li
         class="page-item"
         id="item-page"
         data-page="3"
-        onclick="pagination(3)"
+        onclick="pagination(3, 'products?page')"
       ><button class="page-link">3</button></li>
       <li
         class="page-item"
         id="item-page"
         data-page="4"
-        onclick="pagination(4)"
+        onclick="pagination(4, 'products?page')"
       ><button class="page-link">4</button></li>
       <li class="page-item">
         <button
           class="page-link"
-          onclick="nextPage()"
+          onclick="nextPage('products?page')"
           type="button"
           id="next-page"
         >Siguiente</button>

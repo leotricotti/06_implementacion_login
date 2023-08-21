@@ -1,3 +1,6 @@
+// Initializar socket.io
+const socketIo = io();
+
 // Obtener la pagina actual
 socketIo.emit("page", localStorage.getItem("currentPage"));
 
@@ -14,32 +17,31 @@ if (localStorage.getItem("currentPage") === "4") {
 }
 
 //Paginación de navegación
-const pagination = (page) => {
-  console.log(page);
+const pagination = (page, api) => {
   if (page) {
     let currentPage = localStorage.setItem("currentPage", page);
   }
-  return (window.location.href = `/api/realtimeproducts?page=${page}`);
+  return (window.location.href = `${api}=${page}`);
 };
 
 //Paginación botón anterior
-const previousPage = () => {
+const previousPage = (api) => {
   let currentPage = localStorage.getItem("currentPage");
   currentPage = parseInt(currentPage);
   if (currentPage > 1) {
     currentPage -= 1;
   }
   const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `/api/realtimeproducts?page=${currentPage}`);
+  return (window.location.href = `/api/${api}=${page}`);
 };
 
 //Paginación botón siguiente
-const nextPage = () => {
+const nextPage = (api) => {
   let currentPage = localStorage.getItem("currentPage");
   currentPage = parseInt(currentPage);
   if (currentPage < 4) {
     currentPage += 1;
   }
   const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `/api/realtimeproducts?page=${currentPage}`);
+  return (window.location.href = `${api}=${page}`);
 };
