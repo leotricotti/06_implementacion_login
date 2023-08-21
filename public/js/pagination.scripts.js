@@ -4,11 +4,15 @@ const socketIo = io();
 // Obtener la pagina actual
 socketIo.emit("page", localStorage.getItem("currentPage"));
 
-//Desabilitar boton de paginación anterior en página 1
-if (localStorage.getItem("currentPage") === "1") {
-  const element = document.getElementById("previous-page");
-  element.classList.add("disabled");
-}
+document.addEventListener("DOMContentLoaded", () => {
+  if (
+    localStorage.getItem("currentPage") === "1" ||
+    !localStorage.getItem("currentPage")
+  ) {
+    const element = document.getElementById("previous-page");
+    element.classList.add("disabled");
+  }
+});
 
 //Desabilitar boton de paginación siguiente en página 4
 if (localStorage.getItem("currentPage") === "4") {
@@ -45,5 +49,3 @@ const nextPage = (api) => {
   const result = localStorage.setItem("currentPage", currentPage);
   return (window.location.href = `${api}=${page}`);
 };
-
-//Página actual

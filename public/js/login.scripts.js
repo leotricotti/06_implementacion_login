@@ -36,7 +36,7 @@ const checkUser = async () => {
         confirmButtonText: "Aceptar",
       });
     } else {
-      window.location.href = "/api/products";
+      window.location.href = "/api/products?page=1";
     }
   } catch (error) {
     console.error(error);
