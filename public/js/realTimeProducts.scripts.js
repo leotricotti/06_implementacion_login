@@ -83,6 +83,8 @@ async function updateProductList(products) {
     products.forEach((product) => {
       const container = document.createElement("div");
       container.classList.add("list-group-item");
+      //Acceder a la imagen del producto
+      const imageUrl = imageArray[0]["img1"];
 
       container.innerHTML = `
         <div class="d-flex w-100 justify-content-between flex-column">
@@ -93,7 +95,7 @@ async function updateProductList(products) {
           <p class="mb-1"><strong>Status:</strong> ${product.status}</p>
           <p class="mb-1"><strong>Stock:</strong> ${product.stock}</p>
           <p class="mb-1"><strong>Categoria:</strong> ${product.category}</p>
-          <img src="${product.thumbnail}" alt="img" width="50" height="50" class="thumbnail">
+          <img src="${imageUrl}" alt="img" width="50" height="50" class="thumbnail">
         </div>
         <button type="button" class="btn btn-primary delete-product-btn">Eliminar</button>
       `;
