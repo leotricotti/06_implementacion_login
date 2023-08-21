@@ -42,57 +42,14 @@ async function handleSubmit(e) {
       category: category.value,
       thumbnail: thumbnail.value,
     };
-    socketIo.emit("newProduct", product);
-    // Limpiar todos los campos del formulario
-    for (let i = 0; i < form.elements.length; i++) {
-      form.elements[i].value = "";
-    }
-  }
-
-  // Función para actualizar la lista de productos
-  async function updateProductList(products) {
-    if (products.length > 0) {
-      const productList = document.getElementById("products-list");
-      productList.innerHTML = "";
-
-      products.forEach((product) => {
-        const container = document.createElement("div");
-        container.classList.add("list-group-item");
-        //Capturar la url de la imagen
-        const imageUrl = imageArray[0]["img1"];
-
-        container.innerHTML = `
-        <div class="d-flex w-100 justify-content-between flex-column">
-          <h2 class="mb-1 subtitle">${product.title}</h2>
-          <p class="mb-1"><strong>Descripción:</strong> ${product.description}</p>
-          <p class="mb-1"><strong>Codigo:</strong> ${product.code}</p>
-          <p class="mb-1"><strong>Precio:</strong> ${product.price}</p>
-          <p class="mb-1"><strong>Status:</strong> ${product.status}</p>
-          <p class="mb-1"><strong>Stock:</strong> ${product.stock}</p>
-          <p class="mb-1"><strong>Categoria:</strong> ${product.category}</p>
-          <img src="${product.thumbnail}" alt="img" width="50" height="50" class="thumbnail">
-        </div>
-        <img src="${imageUrl}" alt="img" width="150" class="thumbnail position-absolute me-5 mt-5 end-0 top-0">
-        <button type="button" class="btn btn-primary delete-product-btn">Eliminar</button>
-      `;
-
-        const btnEliminar = container.querySelector(".delete-product-btn");
-        btnEliminar.addEventListener("click", () => {
-          eliminarProducto(product.id);
-        });
-        productList.appendChild(container);
-      });
-    } else {
-      container.innerHTML = `
-    <h1 class="title">Aún no has agrregado productos</h1>
-  `;
-    }
-  }
-
-  // Obtener la lista de productos
-  socketIo.on("products", (products) => {
-    console.log(products);
-    if (products.length < 0) {
+    const response = await fetch("/api/realtimeproducts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    if (!response.ok) {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -110,9 +67,56 @@ async function handleSubmit(e) {
         },
       });
     }
-  });
-  updateProductList(products);
+  }
+  // Limpiar todos los campos del formulario
+  for (let i = 0; i < form.elements.length; i++) {
+    form.elements[i].value = "";
+  }
 }
+
+// Función para actualizar la lista de productos
+async function updateProductList(products) {
+  if (products.length > 0) {
+    const productList = document.getElementById("products-list");
+    productList.innerHTML = "";
+
+    products.forEach((product) => {
+      const container = document.createElement("div");
+      container.classList.add("list-group-item");
+      //Capturar la url de la imagen
+      const imageUrl = product.thumbnail[0]["img1"];
+
+      container.innerHTML = `
+        <div class="d-flex w-100 justify-content-between flex-column">
+          <h2 class="mb-1 subtitle">${product.title}</h2>
+          <p class="mb-1"><strong>Descripción:</strong> ${product.description}</p>
+          <p class="mb-1"><strong>Codigo:</strong> ${product.code}</p>
+          <p class="mb-1"><strong>Precio:</strong> ${product.price}</p>
+          <p class="mb-1"><strong>Status:</strong> ${product.status}</p>
+          <p class="mb-1"><strong>Stock:</strong> ${product.stock}</p>
+          <p class="mb-1"><strong>Categoria:</strong> ${product.category}</p>
+        </div>
+        <img src="${imageUrl}" alt="img" width="150" class="thumbnail position-absolute me-5 mt-5 end-0 top-0">
+        <button type="button" class="btn btn-primary delete-product-btn">Eliminar</button>
+      `;
+
+      const btnEliminar = container.querySelector(".delete-product-btn");
+      btnEliminar.addEventListener("click", () => {
+        eliminarProducto(product.id);
+      });
+      productList.appendChild(container);
+    });
+  } else {
+    container.innerHTML = `
+    <h1 class="title">Aún no has agrregado productos</h1>
+  `;
+  }
+}
+
+// Obtener la lista de productos
+socketIo.on("products", (products) => {
+  updateProductList(products);
+});
 
 // Eliminar un producto de la lista de productos
 function eliminarProducto(id) {

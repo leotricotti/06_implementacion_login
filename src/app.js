@@ -84,31 +84,19 @@ const httpServer = app.listen(PORT, () => {
 
 // Socket
 const io = new Server(httpServer);
-
 // Código para el manejo de conexiones de socket
 io.on("connection", async (socket) => {
   // Mensaje de bienvenida al cliente que se conectó
   console.log("Un cliente se ha conectado");
 
-  // Obtener los productos y emitirlos al cliente
-  socket.on("products", async () => {
-    try {
-      const products = await productsManager.getAll();
-      console.log(products);
-      io.emit("products", products);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  // Obtener los productos y emitirlos al cliente
-  // socket.on("newProduct", async (newProduct) => {
-  //   try {
-  //     const result = await productsManager.saveProducts(newProduct);
-  //     const paginatedProducts = await productsManager.paginatedProducts(2);
-  //     io.emit("products", paginatedProducts);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
+  // Obtener datos de la base de datos
+  try {
+    const products = await productsManager.getAll();
+    console.log(products);
+    const orderedProducts = products.reverse();
+    io.emit("products", orderedProducts);
+  } catch (error) {
+    // Manejar el error
+    console.log(error);
+  }
 });
