@@ -70,13 +70,19 @@ const enviroment = async () => {
 enviroment();
 
 //Middleware para hacer privadas las rutas
-const auth = (req, res, next) => {
-  if (req.session && req.session.user) {
-    return next();
-  } else {
-    return res.status(401).json({
-      respuesta: "No estás autorizado",
-    });
+const auth = async (req, res, next) => {
+  try {
+    const session = await req.session;
+    const user = await session.user;
+    if (user && session) {
+      return next();
+    } else {
+      return res.status(401).json({
+        respuesta: "No estás autorizado",
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 

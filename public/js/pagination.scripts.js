@@ -45,3 +45,5 @@ const nextPage = (api) => {
   const result = localStorage.setItem("currentPage", currentPage);
   return (window.location.href = `${api}=${page}`);
 };
+
+//Página actual

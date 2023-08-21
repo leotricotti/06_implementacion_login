@@ -11,6 +11,16 @@ p {
 
 .dropdown-menu[data-bs-popper] {
   left: -100px;
+  position: absolute !important;
+}
+
+.navbar-nav {
+  flex-direction: row !important;
+}
+
+.container-fluid {
+  flex-wrap: nowrap !important;
+  max-width: 1100px;
 }
 
 .form-container {

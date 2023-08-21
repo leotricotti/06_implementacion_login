@@ -8,44 +8,50 @@ const usersManager = new User();
 //Ruta que realiza el login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  try {
+    const result = await usersManager.login(username, password);
 
-  const result = await usersManager.login(username, password);
-
-  if (result.length === 0)
-    return res.status(401).json({
-      respuesta: "Usuario o contraseña incorrectos",
-    });
-  else {
-    req.session.user = username;
-    req.session.admin = true;
-    res.status(200).json({
-      respuesta: "Bienvenido al servidor",
-    });
+    if (result.length === 0)
+      return res.status(401).json({
+        respuesta: "Usuario o contraseña incorrectos",
+      });
+    else {
+      req.session.user = username;
+      req.session.admin = true;
+      res.status(200).json({
+        respuesta: "Bienvenido al servidor",
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
 //Ruta que realiza el signup
 router.post("/signup", async (req, res) => {
   const { first_name, last_name, age, email, password } = req.body;
-
-  const result = await usersManager.signup({
-    first_name,
-    last_name,
-    age,
-    email,
-    password,
-  });
-
-  if (result === null) {
-    return res.status(401).json({
-      respuesta: "Algo salió mal. No hemos podido crear el usuario",
+  try {
+    const result = await usersManager.signup({
+      first_name,
+      last_name,
+      age,
+      email,
+      password,
     });
-  } else {
-    req.session.user = email;
-    req.session.admin = true;
-    res.status(200).json({
-      respuesta: "Usuario creado exitosamente",
-    });
+
+    if (result === null) {
+      return res.status(401).json({
+        respuesta: "Algo salió mal. No hemos podido crear el usuario",
+      });
+    } else {
+      req.session.user = email;
+      req.session.admin = true;
+      res.status(200).json({
+        respuesta: "Usuario creado exitosamente",
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -68,9 +74,19 @@ router.get("/check", async (req, res) => {
 });
 
 //Ruta que realiza el logout
-router.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect("/");
+router.get("/logout", async (req, res) => {
+  try {
+    const logout = await req.session.destroy();
+    if (logout) {
+      res.redirect("/");
+    } else {
+      res.status(401).json({
+        respuesta: "Algo salió mal. No hemos podido cerrar la sesión",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 export default router;

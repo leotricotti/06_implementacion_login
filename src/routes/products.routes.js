@@ -10,7 +10,6 @@ const productsManager = new Product();
 // Método asyncrono para obtener todos los productos
 router.get("/", async (req, res) => {
   const { limit, page, sort, category } = req.query;
-  let initialPage = page ? page : 1;
   try {
     const user = await usersManager.getOne(req.session.user);
     const response = await productsManager.getAll();
@@ -36,9 +35,7 @@ router.get("/", async (req, res) => {
         user: user[0].first_name,
       });
     } else {
-      let paginatedProducts = await productsManager.paginatedProducts(
-        initialPage
-      );
+      let paginatedProducts = await productsManager.paginatedProducts(page);
       res.render("products", {
         products: paginatedProducts.docs,
         styles: "products.styles.css",

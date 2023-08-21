@@ -7,19 +7,8 @@ const router = Router();
 const usersManager = new User();
 const cartsManager = new Cart();
 
-//Middleware para hacer privadas las rutas
-const auth = (req, res, next) => {
-  if (req.session && req.session.user) {
-    return next();
-  } else {
-    return res.status(401).json({
-      respuesta: "No estás autorizado",
-    });
-  }
-};
-
 //Método asyncrono para obtener todos los carritos
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const carts = await cartsManager.getAll();
     res.json(carts);
@@ -32,7 +21,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 //Método asyncrono para obtener un carrito
-router.get("/:cid", auth, async (req, res) => {
+router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
     const cart = await cartsManager.populatedCart(cid);
@@ -58,7 +47,7 @@ router.get("/:cid", auth, async (req, res) => {
 });
 
 //Método asyncrono para crear un carrito
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   let newCart = {
     products: [],
   };
@@ -71,10 +60,9 @@ router.post("/", auth, async (req, res) => {
 });
 
 //Método asyncrono para agregar productos al carrito
-router.post("/:cid/product/:pid", auth, async (req, res) => {
+router.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
   const { op } = req.body;
-  console.log(cid, pid);
   try {
     const cart = await cartsManager.getOne(cid);
     let productExistsInCart = cart.products.findIndex(
@@ -104,7 +92,7 @@ router.post("/:cid/product/:pid", auth, async (req, res) => {
 });
 
 //Método asyncrono para eliminar productos del carrito
-router.delete("/:cid/product/:pid", auth, async (req, res) => {
+router.delete("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
   try {
     const cart = await cartsManager.getOne(cid);
@@ -125,7 +113,7 @@ router.delete("/:cid/product/:pid", auth, async (req, res) => {
 });
 
 //Método asyncrono para vaciar el carrito
-router.delete("/:cid", auth, async (req, res) => {
+router.delete("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
     const cart = await cartsManager.getOne(cid);

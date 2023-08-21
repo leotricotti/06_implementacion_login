@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const { title, description, code, price, stock, category, thumbnails } =
     req.body;
-
   if (!title || !description || !price || !code || !stock) {
     res.status(400).json({ message: "Faltan datos" });
   } else {
