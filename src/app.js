@@ -90,13 +90,14 @@ io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
 
   // Obtener datos de la base de datos
-  try {
-    const products = await productsManager.getAll();
-    console.log(products);
-    const orderedProducts = products.reverse();
-    io.emit("products", orderedProducts);
-  } catch (error) {
-    // Manejar el error
-    console.log(error);
-  }
+  socket.on("page", async (page) => {
+    try {
+      const paginatedProducts = await productsManager.paginatedProducts(page);
+      const orderedProducts = paginatedProducts.docs.reverse();
+      io.emit("products", orderedProducts);
+    } catch (error) {
+      // Manejar el error
+      console.log(error);
+    }
+  });
 });

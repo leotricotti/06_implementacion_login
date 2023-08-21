@@ -115,6 +115,7 @@ async function updateProductList(products) {
 
 // Obtener la lista de productos
 socketIo.on("products", (products) => {
+  console.log(products);
   updateProductList(products);
 });
 

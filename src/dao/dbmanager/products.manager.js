@@ -96,17 +96,4 @@ export default class Product {
       return [];
     }
   };
-
-  //Método asyncrono para obtener los productos ordenados por fecha de creación
-  async sortedProducts() {
-    try {
-      const products = await productsModel.aggregate([
-        { $sort: { createdAt: -1 } },
-      ]);
-      return products;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  }
 }
