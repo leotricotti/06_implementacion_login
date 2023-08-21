@@ -134,7 +134,17 @@ function eliminarProducto(id) {
   });
 }
 
-//Primera carga de la página
-document.addEventListener("DOMContentLoaded", () => {
-  localStorage.setItem("currentPage", "4");
+// Paginación
+const btnNextPage = document.getElementById("next-page");
+
+let page = 1;
+socketIo.emit("nextPage", page);
+
+const nextPage = () => {
+  page++;
+  socketIo.emit("nextPage", page);
+};
+
+btnNextPage.addEventListener("click", () => {
+  nextPage();
 });

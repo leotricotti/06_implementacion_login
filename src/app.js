@@ -69,13 +69,24 @@ const enviroment = async () => {
 
 enviroment();
 
+//Middleware para hacer privadas las rutas
+const auth = (req, res, next) => {
+  if (req.session && req.session.user) {
+    return next();
+  } else {
+    return res.status(401).json({
+      respuesta: "No estás autorizado",
+    });
+  }
+};
+
 // Routes
 app.use("/", LoginRouter);
 app.use("/signup", SignUpRouter);
-app.use("/api/carts", CartsRouter);
+app.use("/api/carts", auth, CartsRouter);
 app.use("/api/session", SessionRouter);
-app.use("/api/products", ProductsRouter);
-app.use("/api/realtimeproducts", RealTimeProducts);
+app.use("/api/products", auth, ProductsRouter);
+app.use("/api/realtimeproducts", auth, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
@@ -90,11 +101,13 @@ io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
 
   // Obtener datos de la base de datos
-  socket.on("page", async (page) => {
+  socket.on("nextPage", async (page) => {
+    console.log(page);
     try {
-      const paginatedProducts = await productsManager.paginatedProducts(page);
-      const orderedProducts = paginatedProducts.docs.reverse();
-      io.emit("products", orderedProducts);
+      const products = await productsManager.getAll();
+      const orderedProducts = products.reverse();
+      const paginatedProducts = orderedProducts.slice(0, page * 10);
+      io.emit("products", paginatedProducts);
     } catch (error) {
       // Manejar el error
       console.log(error);
