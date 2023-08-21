@@ -90,8 +90,8 @@ const auth = async (req, res, next) => {
 const admin = async (req, res, next) => {
   try {
     const password = await req.session.password;
-    const user = await session.user;
-    if (user === "adminCoder@coder.com" && session === "adminCod3r123") {
+    const user = await req.session.user;
+    if (user === "adminCoder@coder.com" && password === "adminCod3r123") {
       return next();
     } else {
       return res.status(401).json({
