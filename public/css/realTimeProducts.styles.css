@@ -5,6 +5,10 @@ body {
   background-color: #eee;
 }
 
+p {
+  margin: 0;
+}
+
 .dropdown-menu[data-bs-popper] {
   left: -100px;
 }

@@ -1,7 +1,10 @@
 import { Router } from "express";
+import User from "../dao/dbmanager/users.manager.js";
 import Cart from "../dao/dbmanager/carts.manager.js";
 
+//Inicializar servicios
 const router = Router();
+const usersManager = new User();
 const cartsManager = new Cart();
 
 //Middleware para hacer privadas las rutas
@@ -33,11 +36,13 @@ router.get("/:cid", auth, async (req, res) => {
   const { cid } = req.params;
   try {
     const cart = await cartsManager.populatedCart(cid);
+    const user = await usersManager.getOne(req.session.user);
     const product = cart.products;
     if (cart) {
       res.render("carts", {
         cart: product,
         styles: "carts.styles.css",
+        user: user[0].first_name,
       });
     } else {
       res.status(404).json({
@@ -69,6 +74,7 @@ router.post("/", auth, async (req, res) => {
 router.post("/:cid/product/:pid", auth, async (req, res) => {
   const { cid, pid } = req.params;
   const { op } = req.body;
+  console.log(cid, pid);
   try {
     const cart = await cartsManager.getOne(cid);
     let productExistsInCart = cart.products.findIndex(

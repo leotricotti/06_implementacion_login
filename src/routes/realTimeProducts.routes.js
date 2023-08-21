@@ -1,15 +1,20 @@
 import { Router } from "express";
+import User from "../dao/dbmanager/users.manager.js";
 import Product from "../dao/dbmanager/products.manager.js";
 
+//Inicializar servicios
 const router = Router();
+const usersManager = new User();
 const productsManager = new Product();
 
 // Método asyncrono para obtener los productos en tiempo real
 router.get("/", async (req, res) => {
   try {
+    const user = await usersManager.getOne(req.session.user);
     res.render("realTimeProducts", {
       styles: "realTimeProducts.styles.css",
       title: "Productos en tiempo real",
+      user: user[0].first_name,
     });
   } catch (err) {
     res.render({ message: "Error al obtener los productos", data: err });
