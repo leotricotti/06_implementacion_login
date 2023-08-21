@@ -7,14 +7,16 @@ socketIo.emit("page", localStorage.getItem("currentPage"));
 const page = document.getElementById("item-page");
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (
-    localStorage.getItem("currentPage") === "1" ||
-    !localStorage.getItem("currentPage")
-  ) {
-    const element = document.getElementById("previous-page");
+  const elements = document.querySelectorAll(`li[data-page]`);
+  const element = document.getElementById("previous-page");
+  if (!localStorage.getItem("currentPage")) {
     element.classList.add("disabled");
+    elements.classList.add("active");
   } else if (localStorage.getItem("currentPage") === "4") {
     const element = document.getElementById("next-page");
+    element.classList.add("disabled");
+  } else if (localStorage.getItem("currentPage") === "1") {
+    const element = document.getElementById("previous-page");
     element.classList.add("disabled");
   }
 });
