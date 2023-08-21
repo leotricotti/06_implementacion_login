@@ -13,13 +13,6 @@ p {
   left: -100px;
 }
 
-.title,
-.message {
-  text-align: center;
-  color: #004d9c;
-  padding: 0 1rem 0;
-}
-
 .form-container {
   width: 100%;
   max-width: 768px;
