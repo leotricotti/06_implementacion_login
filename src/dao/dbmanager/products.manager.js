@@ -4,7 +4,7 @@ export default class Product {
   //Método asyncrono para obtener todos los productos
   getAll = async () => {
     try {
-      let products = await productsModel.find().lean();
+      const products = await productsModel.find().lean();
       return products;
     } catch (error) {
       console.log(error);
@@ -15,7 +15,7 @@ export default class Product {
   //Método asyncrono para obtener un producto
   getOne = async (id) => {
     try {
-      let product = await productsModel.findById(id);
+      const product = await productsModel.findById(id);
       return product;
     } catch (error) {
       console.log(error);
@@ -26,7 +26,7 @@ export default class Product {
   //Método asyncrono para crear un producto
   saveProducts = async (product) => {
     try {
-      let result = await productsModel.create(product);
+      const result = await productsModel.create(product);
       return result;
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ export default class Product {
   //Método asyncrono para actualizar un producto
   updateProducts = async (id, product) => {
     try {
-      let result = await productsModel.findByIdAndUpdate(id, product);
+      const result = await productsModel.findByIdAndUpdate(id, product);
       return result;
     } catch (error) {
       console.log(error);
@@ -46,9 +46,9 @@ export default class Product {
   };
 
   //Método asyncrono para eliminar un producto
-  deleteProducts = async (id) => {
+  deconsteProducts = async (id) => {
     try {
-      let product = await productsModel.findByIdAndDelete(id);
+      const product = await productsModel.findByIdAndDeconste(id);
       return product;
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ export default class Product {
   //Método asyncrono para obtener los productos filtrados por categoría
   filteredProducts = async (category) => {
     try {
-      let products = await productsModel.paginate(
+      const products = await productsModel.paginate(
         { category: category },
         { limit: 10, page: 1 }
       );
@@ -73,7 +73,7 @@ export default class Product {
   //Método asyncrono para obtener los productos ordenados por precio
   orderedProducts = async (order) => {
     try {
-      let products = await productsModel.aggregate([
+      const products = await productsModel.aggregate([
         { $sort: { price: parseInt(order) } },
       ]);
       return products;
@@ -86,7 +86,7 @@ export default class Product {
   //Método asyncrono para obtener los productos paginados
   paginatedProducts = async (page) => {
     try {
-      let products = await productsModel.paginate(
+      const products = await productsModel.paginate(
         {},
         { limit: 10, page: parseInt(page) }
       );

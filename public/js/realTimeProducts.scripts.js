@@ -89,6 +89,7 @@ async function handleSubmit(e) {
 
   // Obtener la lista de productos
   socketIo.on("products", (products) => {
+    console.log(products);
     if (products.length < 0) {
       return Swal.fire({
         icon: "error",
@@ -107,8 +108,8 @@ async function handleSubmit(e) {
         },
       });
     }
-    updateProductList(products);
   });
+  updateProductList(products);
 }
 
 // Eliminar un producto de la lista de productos

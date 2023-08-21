@@ -4,7 +4,7 @@ export default class Cart {
   // Método asyncrono para obtener todos los carritos
   getAll = async () => {
     try {
-      let result = await cartsModel.find().lean();
+      const result = await cartsModel.find().lean();
       return result;
     } catch (error) {
       console.log(error);
@@ -15,7 +15,7 @@ export default class Cart {
   // Método asyncrono para obtener un carrito
   getOne = async (id) => {
     try {
-      let result = await cartsModel.findById(id).lean();
+      const result = await cartsModel.findById(id).lean();
       return result;
     } catch (error) {
       console.log(error);
@@ -26,7 +26,7 @@ export default class Cart {
   // Método asyncrono para crear un carrito
   saveCart = async (cart) => {
     try {
-      let result = await cartsModel.create(cart);
+      const result = await cartsModel.create(cart);
       return result;
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ export default class Cart {
   // Método asyncrono para eliminar un producto del carrito
   updateCart = async (id, cart) => {
     try {
-      let result = await cartsModel.updateOne({ _id: id }, cart);
+      const result = await cartsModel.updateOne({ _id: id }, cart);
       return result;
     } catch (error) {
       console.log(error);
@@ -48,7 +48,7 @@ export default class Cart {
   // Método asyncrono para vaciar el carrito
   emptyCart = async (id, cart) => {
     try {
-      let result = await cartsModel.updateOne({ _id: id }, cart);
+      const result = await cartsModel.updateOne({ _id: id }, cart);
       return result;
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ export default class Cart {
   // Método asyncrono para popular el carrito
   populatedCart = async (id) => {
     try {
-      let result = await cartsModel.findById(id).populate("products.product");
+      const result = await cartsModel.findById(id).populate("products.product");
       return result;
     } catch (error) {
       console.log(error);

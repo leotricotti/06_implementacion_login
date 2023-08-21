@@ -94,19 +94,21 @@ io.on("connection", async (socket) => {
   socket.on("products", async () => {
     try {
       const products = await productsManager.getAll();
+      console.log(products);
+      io.emit("products", products);
     } catch (error) {
       console.log(error);
     }
   });
 
   // Obtener los productos y emitirlos al cliente
-  socket.on("newProduct", async (newProduct) => {
-    try {
-      const result = await productsManager.saveProducts(newProduct);
-      const paginatedProducts = await productsManager.paginatedProducts(2);
-      io.emit("products", paginatedProducts);
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  // socket.on("newProduct", async (newProduct) => {
+  //   try {
+  //     const result = await productsManager.saveProducts(newProduct);
+  //     const paginatedProducts = await productsManager.paginatedProducts(2);
+  //     io.emit("products", paginatedProducts);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // });
 });
