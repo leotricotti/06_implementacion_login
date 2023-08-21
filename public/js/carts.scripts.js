@@ -59,9 +59,16 @@ const deleteAllProducts = async () => {
   refreshPage();
   return response;
 };
+
 //Refrescar página
 const refreshPage = () => {
   setTimeout(() => {
     window.location.reload();
   }, 1800);
+};
+
+//Direccionar a la pagina de productos anterior
+const continueBuying = (page) => {
+  page = localStorage.getItem("currentPage");
+  window.location.href = `/api/products?page=${page}`;
 };
