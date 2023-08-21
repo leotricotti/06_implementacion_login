@@ -58,10 +58,9 @@ async function handleSubmit(e) {
       products.forEach((product) => {
         const container = document.createElement("div");
         container.classList.add("list-group-item");
-        // Obtener la url de la imagen
-        const imageUrl = product.thumbnail[0]["img1"];
+
         container.innerHTML = `
-        <div class="d-flex w-100 justify-content-between flex-column position-relative">
+        <div class="d-flex w-100 justify-content-between flex-column">
           <h2 class="mb-1 subtitle">${product.title}</h2>
           <p class="mb-1"><strong>Descripción:</strong> ${product.description}</p>
           <p class="mb-1"><strong>Codigo:</strong> ${product.code}</p>
@@ -69,6 +68,7 @@ async function handleSubmit(e) {
           <p class="mb-1"><strong>Status:</strong> ${product.status}</p>
           <p class="mb-1"><strong>Stock:</strong> ${product.stock}</p>
           <p class="mb-1"><strong>Categoria:</strong> ${product.category}</p>
+          <img src="${product.thumbnail}" alt="img" width="50" height="50" class="thumbnail">
         </div>
         <img src="${imageUrl}" alt="img" width="150" class="thumbnail position-absolute me-5 mt-5 end-0 top-0">
         <button type="button" class="btn btn-primary delete-product-btn">Eliminar</button>
