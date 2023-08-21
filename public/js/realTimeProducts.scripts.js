@@ -58,6 +58,8 @@ async function handleSubmit(e) {
       products.forEach((product) => {
         const container = document.createElement("div");
         container.classList.add("list-group-item");
+        //Capturar la url de la imagen
+        const imageUrl = imageArray[0]["img1"];
 
         container.innerHTML = `
         <div class="d-flex w-100 justify-content-between flex-column">
