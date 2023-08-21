@@ -65,11 +65,3 @@ const refreshPage = () => {
     window.location.reload();
   }, 1800);
 };
-
-//Obtener cartId de localStorage y asignarlo a la ruta del carrito
-const setCartRoute = () => {
-  const cartRoute = document
-    .getElementById("cart-route")
-    .setAttribute("href", `/api/carts/${localStorage.getItem("cartId")}`);
-  return cartRoute;
-};
