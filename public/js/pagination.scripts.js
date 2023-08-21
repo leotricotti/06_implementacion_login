@@ -4,6 +4,8 @@ const socketIo = io();
 // Obtener la pagina actual
 socketIo.emit("page", localStorage.getItem("currentPage"));
 
+const page = document.getElementById("item-page");
+
 document.addEventListener("DOMContentLoaded", () => {
   if (
     localStorage.getItem("currentPage") === "1" ||
@@ -11,14 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
   ) {
     const element = document.getElementById("previous-page");
     element.classList.add("disabled");
+  } else if (localStorage.getItem("currentPage") === "4") {
+    const element = document.getElementById("next-page");
+    element.classList.add("disabled");
   }
 });
 
-//Desabilitar boton de paginación siguiente en página 4
-if (localStorage.getItem("currentPage") === "4") {
-  const element = document.getElementById("next-page");
-  element.classList.add("disabled");
-}
+// Agregar la clase active al elemento de la pagina actual
+document.addEventListener("DOMContentLoaded", () => {
+  const currentPage = localStorage.getItem("currentPage");
+  const elements = document.querySelectorAll(`li[data-page]`);
+  elements.forEach((element) => {
+    if (element.dataset.page === currentPage) {
+      element.classList.add("active");
+    } else {
+      element.classList.remove("active");
+    }
+  });
+});
 
 //Paginación de navegación
 const pagination = (page, api) => {
@@ -36,7 +48,7 @@ const previousPage = (api) => {
     currentPage -= 1;
   }
   const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `/api/${api}=${page}`);
+  return (window.location.href = `/api/${api}=${currentPage}`);
 };
 
 //Paginación botón siguiente
@@ -46,6 +58,7 @@ const nextPage = (api) => {
   if (currentPage < 4) {
     currentPage += 1;
   }
+
   const result = localStorage.setItem("currentPage", currentPage);
-  return (window.location.href = `${api}=${page}`);
+  return (window.location.href = `${api}=${currentPage}`);
 };

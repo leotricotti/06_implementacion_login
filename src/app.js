@@ -86,13 +86,30 @@ const auth = async (req, res, next) => {
   }
 };
 
+// Middleware para validar si el usuario es administrador
+const admin = async (req, res, next) => {
+  try {
+    const password = await req.session.password;
+    const user = await session.user;
+    if (user === "adminCoder@coder.com" && session === "adminCod3r123") {
+      return next();
+    } else {
+      return res.status(401).json({
+        respuesta: "No estás autorizado",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Routes
 app.use("/", LoginRouter);
 app.use("/signup", SignUpRouter);
 app.use("/api/carts", auth, CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", auth, ProductsRouter);
-app.use("/api/realtimeproducts", auth, RealTimeProducts);
+app.use("/api/realtimeproducts", admin, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
