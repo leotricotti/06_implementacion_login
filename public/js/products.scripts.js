@@ -78,3 +78,8 @@ const setCartRoute = () => {
     .setAttribute("href", `/api/carts/${localStorage.getItem("cartId")}`);
   return cartRoute;
 };
+
+//Moverse al panel del administrador
+const goToAdminPanel = () => {
+  window.location.href = "/api/realtimeproducts";
+};

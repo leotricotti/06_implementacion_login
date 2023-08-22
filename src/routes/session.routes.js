@@ -16,11 +16,19 @@ router.post("/login", async (req, res) => {
         respuesta: "Usuario o contraseña incorrectos",
       });
     else {
-      req.session.user = username;
-      req.session.admin = true;
-      res.status(200).json({
-        respuesta: "Bienvenido al servidor",
-      });
+      if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
+        req.session.user = username;
+        req.session.admin = true;
+        res.status(200).json({
+          respuesta: "Bienvenido al servidor",
+        });
+      } else {
+        req.session.user = username;
+        req.session.admin = false;
+        res.status(200).json({
+          respuesta: "Bienvenido a la tienda",
+        });
+      }
     }
   } catch (error) {
     console.log(error);

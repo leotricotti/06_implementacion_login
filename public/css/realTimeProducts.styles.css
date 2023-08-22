@@ -101,7 +101,7 @@ label {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #004d9c;
+  background-color: #004d9c !important;
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
