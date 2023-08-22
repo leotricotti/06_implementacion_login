@@ -1,11 +1,7 @@
 // Initializar socket.io
 const socketIo = io();
 
-// Obtener la pagina actual
-socketIo.emit("page", localStorage.getItem("currentPage"));
-
-const page = document.getElementById("item-page");
-
+// Agregar la clase disabled al botón de la página anterior si es la primera página
 document.addEventListener("DOMContentLoaded", () => {
   const element = document.getElementById("previous-page");
   if (
