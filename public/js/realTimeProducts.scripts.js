@@ -134,17 +134,7 @@ function eliminarProducto(id) {
   });
 }
 
-// Paginación
-const btnNextPage = document.getElementById("next-page");
-
-let page = 1;
-socketIo.emit("nextPage", page);
-
-const nextPage = () => {
-  page++;
-  socketIo.emit("nextPage", page);
+//Ir a productos
+const goToProducts = () => {
+  window.location.href = "/api/products?page=1";
 };
-
-btnNextPage.addEventListener("click", () => {
-  nextPage();
-});

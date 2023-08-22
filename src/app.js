@@ -88,11 +88,11 @@ const auth = async (req, res, next) => {
 };
 
 // Middleware para validar si el usuario es administrador
-const admin = async (req, res, next) => {
+const authAdmin = async (req, res, next) => {
   try {
-    const password = await req.session.password;
-    const user = await req.session.user;
-    if (user === "adminCoder@coder.com" && password === "adminCod3r123") {
+    const admin = req.session.admin;
+    console.log(req.session);
+    if (admin) {
       return next();
     } else {
       return res.status(401).json({
@@ -110,7 +110,7 @@ app.use("/signup", SignUpRouter);
 app.use("/api/carts", auth, CartsRouter);
 app.use("/api/session", SessionRouter);
 app.use("/api/products", auth, ProductsRouter);
-app.use("/api/realtimeproducts", admin, RealTimeProducts);
+app.use("/api/realtimeproducts", authAdmin, RealTimeProducts);
 
 // Server
 const httpServer = app.listen(PORT, () => {
