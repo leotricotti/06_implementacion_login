@@ -61,6 +61,18 @@ body {
   color: rgb(10, 88, 202, 0.8);
 }
 
+.cart-basket {
+  font-size: 0.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  background-color: #418deb;
+  border-radius: 50%;
+}
+
 a {
   text-decoration: none;
   color: #fff;
