@@ -54,7 +54,7 @@ const checkUser = async () => {
       });
     } else {
       window.location.href = "/api/products?page=1";
-      const page = localStorage.setItem("currentPage", 1);
+      localStorage.setItem("currentPage", 1);
       createCart();
     }
   } catch (error) {

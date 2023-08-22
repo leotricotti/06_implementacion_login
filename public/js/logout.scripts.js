@@ -7,9 +7,16 @@ const logout = async () => {
     },
   });
   if (response) {
-    localStorage.removeItem("cartId");
-    localStorage.removeItem("currentPage");
-    window.location.href = "/";
+    Swal.fire({
+      icon: "success",
+      title: "Gracias por utilizar nuestros servicios",
+      showConfirmButton: false,
+      timer: 2000,
+    }).then(() => {
+      window.location.href = "/";
+      localStorage.removeItem("cartId");
+      localStorage.removeItem("currentPage");
+    });
   }
   return response;
 };

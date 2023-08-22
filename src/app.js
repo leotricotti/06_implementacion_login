@@ -57,6 +57,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 // Conexión respuesta de la base de datos
 const enviroment = async () => {
   try {

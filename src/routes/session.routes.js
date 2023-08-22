@@ -59,6 +59,7 @@ router.post("/signup", async (req, res) => {
 router.get("/check", async (req, res) => {
   try {
     const user = await req.session.user;
+
     if (user) {
       res.status(200).json({
         respuesta: "Bienvenido a la tienda",
