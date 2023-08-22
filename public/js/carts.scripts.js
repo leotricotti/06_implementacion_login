@@ -73,7 +73,32 @@ const continueBuying = (page) => {
   window.location.href = `/api/products?page=${page}`;
 };
 
-//Eliminar el carito del localStorage al finalizar la compra
-const deleteCart = () => {
-  localStorage.removeItem("cartId");
+//Finalizar compra
+const finishBuying = () => {
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¡No podrás revertir esto!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Sí, finalizar compra",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "¡Compra finalizada!",
+        text: "¡Gracias por tu compra!",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("cartId");
+          window.location.href = "/api/products?page=1";
+          deleteAllProducts();
+        }
+      });
+    }
+  });
 };
