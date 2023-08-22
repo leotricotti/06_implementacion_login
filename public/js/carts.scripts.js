@@ -72,3 +72,8 @@ const continueBuying = (page) => {
   page = localStorage.getItem("currentPage");
   window.location.href = `/api/products?page=${page}`;
 };
+
+//Eliminar el carito del localStorage al finalizar la compra
+const deleteCart = () => {
+  localStorage.removeItem("cartId");
+};

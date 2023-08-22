@@ -44,3 +44,11 @@ p {
 .nav-products > h3 {
   margin-right: 32px !important;
 }
+
+.product-cart {
+  border-bottom: 1px solid #ccc;
+}
+
+.product-cart:last-child {
+  border-bottom: none;
+}

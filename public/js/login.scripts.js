@@ -20,6 +20,9 @@ async function postLogin(username, password) {
 
 //Función que al agregar un producto al carrito y el producto ya existe en el carrito, aumenta la cantidad del producto en 1
 const createCart = async () => {
+  if (localStorage.getItem("cartId")) {
+    return;
+  }
   const response = await fetch("/api/carts", {
     method: "POST",
     headers: {
@@ -29,10 +32,7 @@ const createCart = async () => {
       products: [],
     }),
   });
-  const cart = await response.json();
-  if (cart) {
-    showResult("Carrito creado con éxito");
-  }
+  const result = await response.json();
 };
 
 //Comprobar si el usuario está logueado
