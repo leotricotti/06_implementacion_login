@@ -138,10 +138,3 @@ function eliminarProducto(id) {
 const goToProducts = () => {
   window.location.href = "/api/products?page=1";
 };
-
-//Refrescar página
-const refreshPage = () => {
-  setTimeout(() => {
-    window.location.reload();
-  }, 1800);
-};

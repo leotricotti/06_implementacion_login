@@ -67,6 +67,7 @@ const addProduct = async (idProduct) => {
       }),
     });
     if (response) showResult("Producto agregado con éxito");
+    refreshPage();
     return response;
   }
 };
@@ -82,4 +83,11 @@ const setCartRoute = () => {
 //Moverse al panel del administrador
 const goToAdminPanel = () => {
   window.location.href = "/api/realtimeproducts";
+};
+
+//Refrescar página
+const refreshPage = () => {
+  setTimeout(() => {
+    window.location.reload();
+  }, 1800);
 };
