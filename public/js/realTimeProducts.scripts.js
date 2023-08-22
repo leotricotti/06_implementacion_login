@@ -68,6 +68,7 @@ async function handleSubmit(e) {
       });
     }
   }
+  refreshPage();
   // Limpiar todos los campos del formulario
   for (let i = 0; i < form.elements.length; i++) {
     form.elements[i].value = "";
@@ -148,4 +149,9 @@ const nextPage = () => {
 //Ir a productos
 const goToProducts = () => {
   window.location.href = "/api/products?page=1";
+};
+
+//Refrescar pagina
+const refreshPage = () => {
+  window.location.reload();
 };
