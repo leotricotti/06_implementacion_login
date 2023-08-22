@@ -125,7 +125,6 @@ io.on("connection", async (socket) => {
 
   // Obtener datos de la base de datos
   socket.on("nextPage", async (page) => {
-    console.log("El cliente solicita la página: ", page);
     try {
       const products = await productsManager.getAll();
       const orderedProducts = products.reverse();
