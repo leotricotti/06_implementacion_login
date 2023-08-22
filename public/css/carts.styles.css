@@ -28,6 +28,19 @@ p {
   color: rgb(10, 88, 202, 0.8);
 }
 
+.cart-basket {
+  padding: 2px 0 0 1px;
+  font-size: 0.6rem;
+  position: absolute;
+  top: -3px;
+  right: 4px;
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  background-color: #418deb;
+  border-radius: 50%;
+}
+
 .navbar-nav {
   flex-direction: row !important;
 }

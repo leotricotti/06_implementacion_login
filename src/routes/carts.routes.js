@@ -21,6 +21,26 @@ router.get("/", async (req, res) => {
 });
 
 //Método asyncrono para obtener un carrito
+router.get("/cartbadge/:cid", async (req, res) => {
+  const { cid } = req.params;
+  try {
+    const cart = await cartsManager.getOne(cid);
+    if (cart) {
+      res.json(cart);
+    } else {
+      res.status(404).json({
+        message: "Carrito no encontrado",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "Error al obtener el carrito",
+      data: err,
+    });
+  }
+});
+
+//Método asyncrono para obtener un carrito
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
