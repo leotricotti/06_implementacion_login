@@ -91,7 +91,6 @@ const auth = async (req, res, next) => {
 const authAdmin = async (req, res, next) => {
   try {
     const admin = req.session.admin;
-    console.log(req.session);
     if (admin) {
       return next();
     } else {
